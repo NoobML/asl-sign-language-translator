@@ -36,3 +36,40 @@ for ax in axes.flat:
     ax.set_title(f'Image {Y_train[random_idx]}', fontsize=8)
 # plt.show()
 
+
+def build_model():
+    X_input = Input(shape=(28, 28, 1), name='Input')
+
+    #Layer 1
+    X = Conv2D(16, (3, 3), kernel_initializer='he_normal', kernel_regularizer=l2(0.02))(X_input)
+    X = BatchNormalization()(X)
+    X = Activation('relu')(X)
+    X = Dropout(0.3)(X)
+
+    #Layer 2
+    X = Conv2D(32, (3, 3), kernel_initializer='he_normal', kernel_regularizer=l2(0.02))(X)
+    X = BatchNormalization()(X)
+    X = Activation('relu')(X)
+    X = Dropout(0.3)(X)
+
+    #Layer 3
+    X = Conv2D(64, (3, 3), kernel_initializer='he_normal', kernel_regularizer=l2(0.02))(X)
+    X = BatchNormalization()(X)
+    X = Activation('relu')(X)
+    X = Dropout(0.4)(X)
+
+    X = GlobalMaxPooling2D()(X)
+
+    # FC Layer
+    X = Dense(units=32, kernel_initializer='he_normal', kernel_regularizer=l2(0.02))(X)
+    X = BatchNormalization()(X)
+    X = Activation('relu')(X)
+    X = Dropout(0.5)(X)
+    
+    output = Dense(units=24, activation='softmax')(X)
+    model = Model(inputs=X_input, outputs=output)
+    model.compile(optimizer=Adam(learning_rate=0.002), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+    
+    return model
+
+
