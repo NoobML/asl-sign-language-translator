@@ -72,4 +72,19 @@ def build_model():
     
     return model
 
+model = build_model()
+
+model.load_weights('Model_Weights.keras')
+model = load_model('Model.h5')
+
+history = model.fit(X_train, Y_train, epochs=200, batch_size=64, validation_split=0.2, callbacks=[lr_scheduler])
+
+model.save_weights('Model_Weights.keras')
+model.save('Model.h5')
+
+
+# Evaluation
+loss, accuracy = model.evaluate(X_test, Y_test)
+print(f'Loss: {loss} , Accuracy: {accuracy}')
+
 
