@@ -88,3 +88,20 @@ loss, accuracy = model.evaluate(X_test, Y_test)
 print(f'Loss: {loss} , Accuracy: {accuracy}')
 
 
+# Plot: Training Accuracy & Loss
+def train_vs_loss(h):
+    epochs = range(len(h.history['accuracy']))
+    plt.figure(figsize=(8, 7))
+    plt.plot(epochs, h.history['accuracy'], 'bo-', label='Training Accuracy')
+    plt.plot(epochs, h.history['loss'], 'r*-', label='Training Loss')
+    plt.xlabel('Epochs')
+    plt.ylabel('Value')
+    plt.title('Training Accuracy vs Loss')
+    plt.legend()
+    plt.show()
+
+train_vs_loss(history)
+
+
+
+
