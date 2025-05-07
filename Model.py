@@ -102,6 +102,18 @@ def train_vs_loss(h):
 
 train_vs_loss(history)
 
-
+# Plot: Training vs Validation Accuracy
+def train_vs_validation(h):
+    epochs = range(len(h.history['accuracy']))
+    plt.figure(figsize=(8, 7))
+    plt.plot(epochs, h.history['accuracy'], 'bo-', label='Training Accuracy')
+    plt.plot(epochs, h.history['val_accuracy'], 'r*-', label='Validation Accuracy')
+    plt.xlabel('Epochs')
+    plt.ylabel('Accuracy')
+    plt.title('Training vs Validation Accuracy')
+    plt.legend()
+    plt.show()
+    
+train_vs_validation(history)
 
 
