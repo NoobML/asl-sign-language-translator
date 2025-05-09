@@ -37,39 +37,22 @@ for ax in axes.flat:
 # plt.show()
 
 
-def build_model():
-    X_input = Input(shape=(28, 28, 1), name='Input')
+def create_model():
+    model = Sequential()
+    model.add(Input(shape=(784,)))
+    model.add(Dense(units=1024, activation='relu', kernel_regularizer=l2(0.01)))
+    model.add(BatchNormalization())
+    # model.add(Dropout(0.4))
 
-    #Layer 1
-    X = Conv2D(16, (3, 3), kernel_initializer='he_normal', kernel_regularizer=l2(0.02))(X_input)
-    X = BatchNormalization()(X)
-    X = Activation('relu')(X)
-    X = Dropout(0.3)(X)
+    model.add(Dense(units=128, activation='relu', kernel_regularizer=l2(0.01)))
+    model.add(BatchNormalization())
+    # model.add(Dropout(0.6))
 
-    #Layer 2
-    X = Conv2D(32, (3, 3), kernel_initializer='he_normal', kernel_regularizer=l2(0.02))(X)
-    X = BatchNormalization()(X)
-    X = Activation('relu')(X)
-    X = Dropout(0.3)(X)
+    model.add(Dense(units=24, activation='softmax'))
 
-    #Layer 3
-    X = Conv2D(64, (3, 3), kernel_initializer='he_normal', kernel_regularizer=l2(0.02))(X)
-    X = BatchNormalization()(X)
-    X = Activation('relu')(X)
-    X = Dropout(0.4)(X)
+    optimizer = Adam(learning_rate=1e-4)
+    model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
-    X = GlobalMaxPooling2D()(X)
-
-    # FC Layer
-    X = Dense(units=32, kernel_initializer='he_normal', kernel_regularizer=l2(0.02))(X)
-    X = BatchNormalization()(X)
-    X = Activation('relu')(X)
-    X = Dropout(0.5)(X)
-    
-    output = Dense(units=24, activation='softmax')(X)
-    model = Model(inputs=X_input, outputs=output)
-    model.compile(optimizer=Adam(learning_rate=0.002), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
-    
     return model
 
 model = build_model()
