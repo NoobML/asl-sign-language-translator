@@ -99,4 +99,31 @@ def train_vs_validation(h):
     
 train_vs_validation(history)
 
+def inference():
+    # image_path = input('Enter the path of the image: ')
+    image_path = r'C:\Users\Hacx\Desktop\maxresdefault.jpg'
+    image = cv2.imread(image_path)
+
+    if image is None:
+        print('Image is not found')
+        return
+
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    image = cv2.resize(image, (224, 224))
+    image = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
+    image = image / 255.0
+    image = image.reshape(1, 224, 224, 3)
+
+
+    pred = model.predict(image)
+    predicted_class = np.argmax(pred)
+    asl_dictionary = {i: chr(65 + i) for i in range(26) if i != 9}  # Excludes 9 (for 'I')
+    predicted_sign = asl_dictionary.get(predicted_class, 'Unknown Class')
+
+
+    print(f'Predicted ASL sign class (index): {predicted_class}')
+    print(f'Predicted ASL sign (letter): {predicted_sign}')
+
+inference()
+
 
