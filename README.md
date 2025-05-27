@@ -159,19 +159,23 @@ Interactive inference function that:
 ```python
 asl_dictionary = {i: chr(65 + i) for i in range(26) if i != 9}
 # Maps class indices to letters A-Z (excluding J)
-```
 
+
+```
 ## 📁 Project Structure
 
 ```
-├── sign_mnist_train.csv          # Training dataset
-├── sign_mnist_test.csv           # Test dataset
-├── ASL_PreTrained_Model.h5       # Saved complete model
+├── .gitattributes                # LFS tracking config for large files
+├── README.md                    # Project documentation
+├── sign_mnist_train.csv         # Training dataset
+├── sign_mnist_test.csv          # Test dataset
+├── ASL_PreTrained_Model.h5      # Saved complete model
 ├── ASL_PreTrained_Model_weights.h5  # Model weights
-├── x_train_data_processed.npy    # Preprocessed training data
-├── x_test_data_processed.npy     # Preprocessed test data
-└── main.py                       # Main implementation
+└── x_train_data_processed.npy   # Preprocessed training data
+├── x_test_data_processed.npy    # Preprocessed test data
+├── sign_language_model.py       # Sign language model script
 ```
+
 
 ## 🛠️ Technologies Used
 
