@@ -21,6 +21,13 @@ The project uses the Sign Language MNIST dataset, which contains:
 - **Image format**: 28x28 grayscale images
 - **Classes**: 24 ASL letters (excluding J and Z due to motion requirements)
 
+## Data Source
+
+The dataset used in this project was taken from Kaggle:  
+[American Sign Language Dataset](https://www.kaggle.com/datasets/deeppythonist/american-sign-language-dataset)
+
+
+
 ## 🏗️ Architecture
 
 ### Transfer Learning Approach
