@@ -80,7 +80,7 @@ train_generator = CustomDataGenerator(x_train, y_train)
 val_generator = CustomDataGenerator(x_val, y_val)
 
 def rate_decay(epoch):
-    initial_learning_rate = 1e-7
+    initial_learning_rate = 1e-4
     decay_rate = 1
     learning_rate_decay = initial_learning_rate / (1 + decay_rate * epoch)
     return learning_rate_decay
@@ -104,8 +104,8 @@ def Resnet50_Model():
 
     X = base_model.output
     X = GlobalMaxPooling2D()(X)
-    X = Dense(1024, activation='relu', kernel_initializer='he_normal', kernel_regularizer=l2(0.1))(X)
-    X = Dense(512, activation='relu', kernel_initializer='he_normal', kernel_regularizer=l2(0.git p1))(X)
+    X = Dense(1024, activation='relu', kernel_initializer='he_normal')(X)
+    X = Dense(512, activation='relu', kernel_initializer='he_normal')(X)
     X = Dense(24, activation='softmax')(X)
 
     return Model(inputs=base_model.input, outputs=X)
@@ -114,8 +114,8 @@ model = Resnet50_Model()
 print(model.summary())
 model.load_weights('ASL_PreTrained_Model_weights.h5')
 
-model.compile(optimizer=Adam(learning_rate=1e-7), loss='categorical_crossentropy', metrics=['accuracy'])
-history = model.fit(train_generator, epochs=20, validation_data=val_generator, callbacks=[Lr_Scheduler])
+model.compile(optimizer=Adam(learning_rate=1e-5), loss='categorical_crossentropy', metrics=['accuracy'])
+history = model.fit(train_generator, epochs=200, validation_data=val_generator) # callbacks=[Lr_Scheduler]
 model.save('ASL_PreTrained_Model.h5')
 model.save_weights('ASL_PreTrained_Model_weights.h5')
 
